@@ -1,0 +1,10 @@
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\bin\Debug\QuizProject.exe.config
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\bin\Debug\QuizProject.exe
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\bin\Debug\QuizProject.pdb
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.csproj.AssemblyReference.cache
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.Properties.Resources.resources
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.csproj.GenerateResource.cache
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.csproj.CoreCompileInputs.cache
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.exe
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.pdb
+C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.Question.resources
