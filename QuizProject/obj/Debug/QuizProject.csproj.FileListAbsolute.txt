@@ -8,3 +8,13 @@ C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.cs
 C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.exe
 C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.pdb
 C:\Users\abduakhad\source\repos\QuizProject\QuizProject\obj\Debug\QuizProject.Question.resources
+S:\Github\QuizProject\QuizProject\bin\Debug\QuizProject.exe.config
+S:\Github\QuizProject\QuizProject\bin\Debug\QuizProject.exe
+S:\Github\QuizProject\QuizProject\bin\Debug\QuizProject.pdb
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.csproj.AssemblyReference.cache
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.Properties.Resources.resources
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.csproj.GenerateResource.cache
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.csproj.CoreCompileInputs.cache
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.exe
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.pdb
+S:\Github\QuizProject\QuizProject\obj\Debug\QuizProject.Form1.resources

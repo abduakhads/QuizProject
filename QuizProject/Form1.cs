@@ -1,25 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static QuizProject.Form1;
 
 namespace QuizProject
 {
-    public class Question
-    {
-        public string Text { get; }
-        public string[] Answers { get; }
-        public int[] CorrectIndexes { get; }
-        public bool IsMultipleChoice { get; }
-
-        public Question(string text, string[] answers, int[] correctIndexes, bool isMultipleChoice)
-        {
-            Text = text;
-            Answers = answers;
-            CorrectIndexes = correctIndexes;
-            IsMultipleChoice = isMultipleChoice;
-        }
-    }
 
     public partial class Form1 : Form
     {
@@ -27,12 +14,30 @@ namespace QuizProject
         private List<Question> questions;
         private List<Control> answerControls = new List<Control>();
         private int correctAnswersCount = 0;
+        private List<List<int>> userAnswers = new List<List<int>>();
+
 
         public Form1()
         {
             InitializeComponent();
             LoadQuestions();
             LoadQuestion();
+        }
+
+        public class Question
+        {
+            public string Text { get; }
+            public string[] Answers { get; }
+            public int[] CorrectIndexes { get; }
+            public bool IsMultipleChoice { get; }
+
+            public Question(string text, string[] answers, int[] correctIndexes, bool isMultipleChoice)
+            {
+                Text = text;
+                Answers = answers;
+                CorrectIndexes = correctIndexes;
+                IsMultipleChoice = isMultipleChoice;
+            }
         }
 
         private void LoadQuestions()
@@ -62,7 +67,7 @@ namespace QuizProject
             }
 
             var question = questions[currentQuestionIndex];
-            QuestionLabel.Text = question.Text;
+            QuestionLabel.Text = $"{currentQuestionIndex + 1}. {question.Text}";
 
             foreach (var control in answerControls)
             {
@@ -89,23 +94,41 @@ namespace QuizProject
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
+            List<int> userChecked = new List<int>();
             bool isCorrect = true;
+            int index = 0;
             foreach (var control in answerControls)
             {
                 bool isChecked = (control is RadioButton rb && rb.Checked) || (control is CheckBox cb && cb.Checked);
                 bool shouldBeChecked = control.Tag.ToString() == "1";
+                if (isChecked) userChecked.Add(index);
+                index++;
 
                 if (isChecked != shouldBeChecked)
                 {
                     isCorrect = false;
-                    break;
                 }
             }
-            if (isCorrect)
-                correctAnswersCount++;
 
-            if (currentQuestionIndex < questions.Count - 1)
+            if (currentQuestionIndex <= questions.Count - 1)
             {
+                if (isCorrect)
+                {
+                    correctAnswersCount++;
+                    MessageBox.Show("Correct!");
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect!");
+                }
+                if (userChecked.Count > 0)
+                {
+                    userAnswers.Add(userChecked);
+                }
+                else
+                {
+                    userAnswers.Add(new List<int> { -1 });
+                }
                 currentQuestionIndex++;
                 LoadQuestion();
             }
@@ -115,18 +138,9 @@ namespace QuizProject
             }
         }
 
-        private void buttonPrevious_Click(object sender, EventArgs e)
-        {
-            if (currentQuestionIndex > 0)
-            {
-                currentQuestionIndex--;
-                LoadQuestion();
-            }
-        }
-
         private void DisplaySummary()
         {
-            QuestionLabel.Text = "Quiz Completed!";
+            QuestionLabel.Text = "Quiz Completed! Summary:";
             foreach (var control in answerControls)
             {
                 Controls.Remove(control);
@@ -142,13 +156,60 @@ namespace QuizProject
             summaryLabel.BackColor = System.Drawing.Color.AliceBlue;
             Controls.Add(summaryLabel);
 
+            int index = 1;
+            int currentTop = QuestionLabel.Bottom + 20 + 40;
+            foreach (var question in questions)
+            {
+                Label questionLabel = new Label();
+                questionLabel.Text = $"{index}. {question.Text}";
+                questionLabel.Left = QuestionLabel.Left;
+                questionLabel.Top = currentTop;
+                questionLabel.AutoSize = true;
+                questionLabel.ForeColor = System.Drawing.Color.AliceBlue;
+                questionLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                Controls.Add(questionLabel);
+                
+                Label userAnswerLabel = new Label();
+                userAnswerLabel.Text = $"Your anwer: ";
+                userAnswerLabel.Left = QuestionLabel.Left;
+                userAnswerLabel.Top = currentTop + 25;
+                userAnswerLabel.AutoSize = true;
+                userAnswerLabel.ForeColor = System.Drawing.Color.AliceBlue;
+
+                foreach (var answerIdx in userAnswers[index - 1])
+                {
+                    if (answerIdx == -1 && userAnswers[index - 1].Count == 1)
+                        userAnswerLabel.Text += "No answer";
+                    else
+                        userAnswerLabel.Text += $"{question.Answers[answerIdx]} ";
+                }
+                Controls.Add(userAnswerLabel);
+
+                Label correctAnswerLabel = new Label();
+                correctAnswerLabel.Text = $"Correct anwer: ";
+                correctAnswerLabel.Left = QuestionLabel.Left;
+                correctAnswerLabel.Top = currentTop + 40;
+                correctAnswerLabel.AutoSize = true;
+                correctAnswerLabel.ForeColor = System.Drawing.Color.AliceBlue;
+
+                foreach (var answerIdx in question.CorrectIndexes)
+                {
+                    correctAnswerLabel.Text += $" {question.Answers[answerIdx]}";
+                }
+                Controls.Add(correctAnswerLabel);
+
+
+                currentTop = questionLabel.Bottom + 50;
+                index++;
+            }
+            Label spaceLabel = new Label();
+            spaceLabel.Top = currentTop + 20;
+            Controls.Add(spaceLabel);
+
             NextBtn.Text = "Close";
             NextBtn.Click += (s, e) => this.Close();
-            PrevBtn.Visible = false;
         }
     }
-
-
 }
 
 
